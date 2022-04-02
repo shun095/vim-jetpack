@@ -494,11 +494,10 @@ function! s:warn_deprecated_autocmd(event) abort
 endfunction
 
 function! jetpack#tap(name) abort
-  for pkg in s:packages
-    if pkg.name ==# a:name
-      return isdirectory(pkg.path)
-    endif
-  endfor
+  let list = filter(copy(s:packages), {idx, val -> val["name"] ==# a:name })
+  if len(list) > 0
+    return isdirectory(l:list[0]["path"])
+  endif
   return 0
 endfunction
 
